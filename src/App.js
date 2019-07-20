@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { FETCH_TODOS_REQUEST } from './duck';
+import Todo from './components/Todo';
+import NewTodo from './components/NewTodo';
 
-import { FETCH_DATA_REQUEST } from './duck';
-
-const App = ({ data, dispatch }) => {
+const App = ({ todos, dispatch }) => {
   useEffect(() => {
-    dispatch({ type: FETCH_DATA_REQUEST });
+    dispatch({ type: FETCH_TODOS_REQUEST });
   }, []);
 
   return (
     <div>
-      {
-        todos.map((todo, index) => <Todo key={index} todo={todo} />)
-      }
+      <NewTodo />
+      {todos && todos.map((todo, index) => <Todo key={index.toString()} todo={todo} />)}
     </div>
   );
 };
 
 export default connect(state => ({
-  data: state.data,
+  todos: state.todos,
 }))(App);

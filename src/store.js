@@ -2,14 +2,15 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { all } from 'redux-saga/effects';
 import createSagaMiddleware from 'redux-saga';
 
-import { dataReducer as data, dataSagas } from './duck';
+import { todosReducer as todos, todosSaga } from './duck';
+import { addTodoSaga, completedTodoSaga, deleteTodoSaga } from './components/duck';
 
 const rootReducer = combineReducers({
-  data,
+  todos,
 });
 
 export const rootSaga = function* rootSaga() {
-  yield all([...dataSagas]);
+  yield all([...todosSaga, ...addTodoSaga, ...completedTodoSaga, ...deleteTodoSaga]);
 };
 
 const sagaMiddleware = createSagaMiddleware();
